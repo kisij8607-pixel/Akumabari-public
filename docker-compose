@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   cowrie:
     image: cowrie/cowrie:latest
@@ -44,7 +43,7 @@ services:
     volumes:
       - ./dionaea/etc/dionaea:/opt/dionaea/etc/dionaea
       - /home/kisij/akumabarai/bin/dionaea:/opt/dionaea/var/lib/dionaea/binaries
-      - /home/kisij/akumabarai/logs/dionaea:/opt/dionaea/var/log/dionaea
+      - /home/kisij/akumabarai/logs/dionaea:/opt/dionaea/var/log
       - /home/kisij/akumabarai/bistreams:/opt/dionaea/var/dionaea/bistreams
     networks:
       - akumabarai_net
