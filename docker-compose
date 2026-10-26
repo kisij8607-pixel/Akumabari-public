@@ -1,22 +1,16 @@
 version: '3.8'
-
 services:
-  # ─────────────────────────────────────────────
-  # Cowrie - SSH/Telnet honeypot
-  # ─────────────────────────────────────────────
   cowrie:
     image: cowrie/cowrie:latest
     container_name: cowrie
     restart: unless-stopped
     ports:
-      # 2222 на хосте занят, поэтому внешний порт 22222
-      - "${COWRIE_SSH_HOST_PORT:-22222}:2222"   # SSH
-      - "${COWRIE_TELNET_HOST_PORT:-2223}:2223" # Telnet
+      - "${COWRIE_SSH_HOST_PORT:-22222}:2222"
+      - "${COWRIE_TELNET_HOST_PORT:-2223}:2223"
     volumes:
-      - ./cowrie/etc:/etc/cowrie
-      - cowrie_downloads:/opt/cowrie/var/lib/cowrie/downloads
-      - cowrie_logs:/opt/cowrie/var/log/cowrie
-      - cowrie_tty:/opt/cowrie/var/lib/cowrie/tty
+      - /home/kisij/akumabarai/bin/cowrie:/cowrie/cowrie-git/var/lib/cowrie/downloads
+      - /home/kisij/akumabarai/logs/cowrie:/cowrie/cowrie-git/var/log/cowrie
+      - cowrie_tty:/cowrie/cowrie-git/var/lib/cowrie/tty
     environment:
       - COWRIE_HOSTNAME=${COWRIE_HOSTNAME:-production-db-01}
       - COWRIE_SSH_VERSION=${COWRIE_SSH_VERSION:-SSH-2.0-OpenSSH_8.2p1}
@@ -25,138 +19,49 @@ services:
     security_opt:
       - no-new-privileges:true
     healthcheck:
-      # Проверяем внутренний порт контейнера, он остаётся 2222
-      test: ["CMD", "sh", "-c", "echo > /dev/tcp/localhost/2222"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+      disable: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 
-  # ─────────────────────────────────────────────
-  # Dionaea - multi-protocol honeypot
-  # ─────────────────────────────────────────────
   dionaea:
-    #image: dinotools/dionaea:latest
     image: dtagdevsec/dionaea:24.04.1
     container_name: dionaea
+    init: true
     restart: unless-stopped
     ports:
-      - "${DIONAEA_FTP_HOST_PORT:-21}:21"       # FTP
-      - "${DIONAEA_WINS_HOST_PORT:-42}:42"      # WINS
-      - "${DIONAEA_TFTP_HOST_PORT:-69}:69/udp"  # TFTP
-      - "${DIONAEA_HTTP_HOST_PORT:-80}:80"      # HTTP
-      - "${DIONAEA_MSRPC_HOST_PORT:-135}:135"   # MSRPC
-      - "${DIONAEA_HTTPS_HOST_PORT:-443}:443"   # HTTPS
-      - "${DIONAEA_SMB_HOST_PORT:-445}:445"     # SMB
-      - "${DIONAEA_MSSQL_HOST_PORT:-1433}:1433" # MSSQL
-      - "${DIONAEA_MYSQL_HOST_PORT:-3306}:3306" # MySQL
+      - "${DIONAEA_FTP_HOST_PORT:-21}:21"
+      - "${DIONAEA_WINS_HOST_PORT:-42}:42"
+      - "${DIONAEA_TFTP_HOST_PORT:-69}:69/udp"
+      - "${DIONAEA_HTTP_HOST_PORT:-80}:80"
+      - "${DIONAEA_MSRPC_HOST_PORT:-135}:135"
+      - "${DIONAEA_HTTPS_HOST_PORT:-443}:443"
+      - "${DIONAEA_SMB_HOST_PORT:-445}:445"
+      - "${DIONAEA_MSSQL_HOST_PORT:-1433}:1433"
+      - "${DIONAEA_MYSQL_HOST_PORT:-3306}:3306"
     volumes:
-      - ./dionaea/etc:/opt/dionaea/etc/dionaea
-      - dionaea_binaries:/opt/dionaea/var/lib/dionaea/binaries
-      - dionaea_logs:/opt/dionaea/var/log/dionaea
-      - ./dionaea/json:/lib/dionaea
+      - ./dionaea/etc/dionaea:/opt/dionaea/etc/dionaea
+      - /home/kisij/akumabarai/bin/dionaea:/opt/dionaea/var/lib/dionaea/binaries
+      - /home/kisij/akumabarai/logs/dionaea:/opt/dionaea/var/log/dionaea
+      - /home/kisij/akumabarai/bistreams:/opt/dionaea/var/dionaea/bistreams
     networks:
       - akumabarai_net
     cap_add:
       - NET_BIND_SERVICE
       - NET_ADMIN
-    user: "dionaea:dionaea"
     healthcheck:
-      test: ["CMD", "sh", "-c", "nc -z localhost 21 || nc -z localhost 80"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
+      disable: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 
-  # ─────────────────────────────────────────────
-  # PostgreSQL - база данных для GreedyBear
-  # ─────────────────────────────────────────────
-  postgres:
-    image: postgres:16-alpine
-    container_name: greedybear_postgres
-    restart: unless-stopped
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-greedybear}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me_strong_password}
-      POSTGRES_DB: ${POSTGRES_DB:-greedybear}
-    networks:
-      - akumabear_net
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-greedybear} -d ${POSTGRES_DB:-greedybear}"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  # ─────────────────────────────────────────────
-  # GreedyBear - threat intelligence platform
-  # ─────────────────────────────────────────────
-  greedybear:
-    image: ghcr.io/greedybear-project/greedybear:test
-    container_name: greedybear
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USER=${POSTGRES_USER:-greedybear}
-      - DB_PASSWORD=${POSTGRES_PASSWORD:-change_me_strong_password}
-      - DB_NAME=${POSTGRES_DB:-greedybear}
-      - DJANGO_SECRET=${DJANGO_SECRET:-generate_a_long_random_secret_key_here}
-      - DEBUG=${DEBUG:-False}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,greedybear}
-    networks:
-      - akumabear_net
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  greedybear_nginx:
-    image: ghcr.io/greedybear-project/greedybear_nginx:test
-    container_name: greedybear_nginx
-    restart: unless-stopped
-    depends_on:
-      - greedybear
-    ports:
-      - "${GREEDYBEAR_HOST_PORT:-8000}:80"
-    networks:
-      - akumabear_net
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 networks:
   akumabarai_net:
     driver: bridge
-  akumabear_net:
-    driver: bridge
 
 volumes:
-  cowrie_downloads:
-  cowrie_logs:
   cowrie_tty:
-  dionaea_binaries:
-  dionaea_logs:
-  postgres_data:
