@@ -1,0 +1,17 @@
+kisij@gavno:~/akumabarai$ tail -n 30 logs/dionaea/dionaea.json | grep -i "smb"
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 35290, "timestamp": "2026-10-26T19:31:39.593070"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 40599, "timestamp": "2026-10-26T19:40:00.102493"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 34427, "timestamp": "2026-10-26T19:40:00.527413"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 41595, "timestamp": "2026-10-26T19:41:41.069421"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 33787, "timestamp": "2026-10-26T19:41:41.198870"}
+kisij@gavno:~/akumabarai$ tail -n 30 logs/dionaea/dionaea.json 
+{"connection": {"protocol": "mysqld", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 3306, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 43438, "timestamp": "2026-10-26T18:54:23.130186"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 35290, "timestamp": "2026-10-26T19:31:39.593070"}
+{"connection": {"protocol": "mssqld", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 1433, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 45476, "timestamp": "2026-10-26T19:31:40.363377"}
+{"connection": {"protocol": "epmapper", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 135, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 42877, "timestamp": "2026-10-26T19:40:00.196344"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 40599, "timestamp": "2026-10-26T19:40:00.102493"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 34427, "timestamp": "2026-10-26T19:40:00.527413"}
+{"connection": {"protocol": "epmapper", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 135, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 39565, "timestamp": "2026-10-26T19:41:41.150085"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 41595, "timestamp": "2026-10-26T19:41:41.069421"}
+{"connection": {"protocol": "smbd", "transport": "tcp", "type": "accept"}, "dst_ip": "172.21.0.2", "dst_port": 445, "src_hostname": "", "src_ip": "192.168.1.80", "src_port": 33787, "timestamp": "2026-10-26T19:41:41.198870"}
+kisij@gavno:~/akumabarai$ 
