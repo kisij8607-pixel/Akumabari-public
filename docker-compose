@@ -7,10 +7,10 @@ services:
       - "${COWRIE_SSH_HOST_PORT:-22222}:2222"
       - "${COWRIE_TELNET_HOST_PORT:-2223}:2223"
     volumes:
-      - ./cowrie/etc:/cowrie/cowrie-git/etc
-      - /home/kisij/akumabarai/bin/cowrie:/cowrie/cowrie-git/var/lib/cowrie/downloads
-      - /home/kisij/akumabarai/logs/cowrie:/cowrie/cowrie-git/var/log/cowrie
-      - cowrie_tty:/cowrie/cowrie-git/var/lib/cowrie/tty
+      - ./cowrie/etc:${COWRIE_ETC}
+      - /home/kisij/akumabarai/bin/cowrie:${COWRIE_BIN}
+      - /home/kisij/akumabarai/logs/cowrie:${COWRIE_LOG}
+      - cowrie_tty:${COWRIE_TTY}
     environment:
       - COWRIE_HOSTNAME=${COWRIE_HOSTNAME:-production-db-01}
       - COWRIE_SSH_VERSION=${COWRIE_SSH_VERSION:-SSH-2.0-OpenSSH_8.2p1}
@@ -42,10 +42,10 @@ services:
       - "${DIONAEA_MSSQL_HOST_PORT:-1433}:1433"
       - "${DIONAEA_MYSQL_HOST_PORT:-3306}:3306"
     volumes:
-      - ./dionaea/etc/dionaea:/opt/dionaea/etc/dionaea
-      - /home/kisij/akumabarai/bin/dionaea:/opt/dionaea/var/lib/dionaea/binaries
-      - /home/kisij/akumabarai/logs/dionaea:/opt/dionaea/var/log
-      - /home/kisij/akumabarai/bistreams:/opt/dionaea/var/dionaea/bistreams
+      - ./dionaea/etc/dionaea:${DIONAEA_ETC}
+      - /home/kisij/akumabarai/bin/dionaea:${DIONAEA_BIN}
+      - /home/kisij/akumabarai/logs/dionaea:${DIONAEA_LOG}
+      - /home/kisij/akumabarai/bistreams:${DIONAEA_BTSTR}
     networks:
       - akumabarai_net
     cap_add:
